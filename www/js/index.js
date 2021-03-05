@@ -21,34 +21,33 @@
 // See https://cordova.apache.org/docs/en/latest/cordova/events/events.html#deviceready
 document.addEventListener('deviceready', onDeviceReady, false);
 
-var tasks;
 
-loadList(){
+// var tasks = ["Item 1","Item 2","Item 3"];
+var tasks;
+var nameTask;
+
+// localStorage.setItem('taskList', JSON.stringify(tasks));
+
+
+function loadList() {
 	tasks = JSON.parse(localStorage.getItem('taskList'));
 	
 	for(i = 0; i<tasks.length; i++){
-		$('#taskList').append('<li><a class="ui-btn ui-btn-icon-right ui-icon-carat-r" href="#">'+nameTask+'</a></li>');
+		$('#taskList').append('<li><a class="ui-btn ui-btn-icon-right ui-icon-carat-r" href="#">'+tasks[i]+'</a></li>');
 	}
 	$('#taskList').listview("refresh");
 
 }
 
 function onDeviceReady() {
-    // Cordova is now initialized. Have fun!
 
     console.log('Running cordova-' + cordova.platformId + '@' + cordova.version);
-    document.getElementById('deviceready').classList.add('ready');
 
     $('#addButton').click(addItemTaskList);
     loadList();
-    $('#delete').click( eliminar_tasca );
 }
 
 function addItemTaskList(){
-
-	alert("ELiminar tasca");
-
-	var nameTask = "DefaultName"
 
 	nameTask = $('#nameNewTask').val();
 
@@ -57,7 +56,8 @@ function addItemTaskList(){
 	tasks.push(nameTask);
 	localStorage.setItem('taskList', JSON.stringify(tasks));
 
-	$('#listview').empty();
-	loadData();
+	$('#taskList').empty();
+	loadList();
+	alert("Se ha añadido un item con el nombre " + nameTask);
 
 }
